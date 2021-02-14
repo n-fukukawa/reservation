@@ -46,12 +46,13 @@ class Calendar extends Component
 
         $date = "{$this->year}-{$this->month}";
         $carbon = Carbon::parse($date);
-        $dayOfFirst = $carbon->dayOfWeek;
-        $lastOfMonth = $carbon->lastOfMonth()->day;
+        $dayOfFirst = $carbon->copy()->dayOfWeek;
+        $lastOfMonth = $carbon->copy()->lastOfMonth()->day;
 
         $calendar = [];
+
         //月初の曜日までを空白で用意（例えば、月初が水曜日の場合は$dayOfFirst = 3となり、日、月、火の３日分を空白にする）
-        $calendar = array_pad($calendar, $dayOfFirst, '');
+        $calendar = array_pad($calendar, $dayOfFirst, "");
 
         //１日から月末まで格納
         $array = range(1, $lastOfMonth);
@@ -59,11 +60,10 @@ class Calendar extends Component
         $calendar = array_merge($calendar, $array);
 
         //月末より後ろのマスを空白で用意
-        $calendar = array_pad($calendar, WEEKDAYS * ROWS_OF_CALENDAR, '');
+        $calendar = array_pad($calendar, WEEKDAYS * ROWS_OF_CALENDAR, "");
 
         return view('components.calendar', [
-            'year' => $this->year,
-            'month' => $this->month,
+            'carbon'    => $carbon,
             'calendar'  => $calendar,
             ]);
     }
