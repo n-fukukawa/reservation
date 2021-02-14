@@ -14,7 +14,10 @@ use App\Http\Controllers\CalendarController;
 |
 */
 
-Route::get('/{year?}/{month?}', [CalendarController::class, 'index'])->name('index');
+Route::get('/{year?}/{month?}', [CalendarController::class, 'index'])
+    ->middleware('auth')
+    ->name('index')
+    ->where(['year' => '[0-9]+', 'month' => '[0-9]+']);;
 
 
 

@@ -1,5 +1,9 @@
 <div>
-   <p>{{ $year }}年{{ $month }}月カレンダー</p>
+    <div class="flex text-center">
+        <a href="/{{ $carbon->copy()->addMonthsNoOverflow(-1)->year }}/{{ $carbon->copy()->addMonthsNoOverflow(-1)->month }}">前月へ</a>
+        <p class="flex-grow">{{ $carbon->year }}年{{ $carbon->month }}月</p>
+        <a href="/{{ $carbon->copy()->addMonthsNoOverflow()->year }}/{{ $carbon->copy()->addMonthsNoOverflow()->month }}">次月へ</a>
+    </div>
 
    <div class="grid grid-cols-7 bg-white">
 
@@ -12,10 +16,10 @@
         <div class="cols-span-1 border">土</div>
 
        @for($i = 0; $i < count($calendar); $i++)
-            <div class="cols-span-1 border">
-                {{ $calendar[$i] }}
-            </div>
+            <calendar-cell :year="{{ $carbon->year }}" :month="{{ $carbon->month }}" :day='@json($calendar[$i])' :key="{{ $i }}">
+            </calendar-cell>
         @endfor
         
-   </div>
+    </div>
+
 </div>
