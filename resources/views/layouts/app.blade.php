@@ -17,7 +17,18 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div id="app" class="min-h-screen bg-gray-100">
+
+            <!-- Navigation -->
+            @Auth
+            <div>
+                <div>ようこそ、{{ Auth::user()->name }}さん</div>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit">ログアウト</button>
+                </form>
+            </div>
+            @endAuth
 
             <!-- Page Heading -->
             <header class="bg-white shadow">

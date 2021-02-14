@@ -1,6 +1,6 @@
 <x-app-layout>
 <x-slot name="header">
-    ホーム
+    <a href="/">予約カレンダー</a>
 </x-slot>
 <div>
 <x-calendar :year="$year" :month="$month"></x-calendar>
