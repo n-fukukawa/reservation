@@ -11,15 +11,7 @@ class ReservationController extends Controller
 {
     public function index(Request $request)
     {
-        $date = new Carbon($request->year.'-'.$request->month.'-'.$request->day);
-        $reservations = Reservation::where('student_id', Auth::id())->where('date', $date)->get();
 
-        $class = [];
-        foreach($reservations as $reservation){
-            $class[] = $reservation->class;
-        }
-
-        return response()->json(['class' => $class]);
     }
 
     public function store(Request $request)
@@ -28,7 +20,7 @@ class ReservationController extends Controller
         
         Reservation::where('student_id', Auth::id())->where('date', $date)->delete();
 
-        foreach($request->schedule as $class){
+        foreach($request->classes as $class){
             $reservation = new Reservation;
 
             $reservation->student_id = Auth::id();
@@ -37,5 +29,15 @@ class ReservationController extends Controller
 
             $reservation->save();
         }
+
+        $classes = Reservation::where('student_id', Auth::id())
+            ->where('date', $date)
+            ->orderBy('class')
+            ->get()
+            ->map(function ($reservation) {
+                return $reservation->class;
+            });
+
+        return response()->json(['classes' => $classes]);
     }
 }

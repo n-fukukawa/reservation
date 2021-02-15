@@ -3,7 +3,6 @@
     <a href="/">予約カレンダー</a>
 </x-slot>
 <div>
-<x-calendar :year="$year" :month="$month"></x-calendar>
-<form action="{{ route('index')}}"></form>
+    <x-calendar :year="$year" :month="$month" :reservations="$reservations"></x-calendar>
 </div>
 </x-app-layout>

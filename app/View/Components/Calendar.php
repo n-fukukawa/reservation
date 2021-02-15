@@ -24,14 +24,22 @@ class Calendar extends Component
     private $month;
 
     /**
+     * 
+     * @var integer
+     * 
+     */
+    private $reservations;
+
+    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($year, $month)
+    public function __construct($year, $month, $reservations)
     {
         $this->year = $year;
         $this->month = $month;
+        $this->reservations = $reservations;
     }
 
     /**
@@ -49,22 +57,23 @@ class Calendar extends Component
         $dayOfFirst = $carbon->copy()->dayOfWeek;
         $lastOfMonth = $carbon->copy()->lastOfMonth()->day;
 
-        $calendar = [];
+        $days = [];
 
         //月初の曜日までを空白で用意（例えば、月初が水曜日の場合は$dayOfFirst = 3となり、日、月、火の３日分を空白にする）
-        $calendar = array_pad($calendar, $dayOfFirst, "");
+        $days = array_pad($days, $dayOfFirst, '');
 
         //１日から月末まで格納
         $array = range(1, $lastOfMonth);
 
-        $calendar = array_merge($calendar, $array);
+        $days = array_merge($days, $array);
 
         //月末より後ろのマスを空白で用意
-        $calendar = array_pad($calendar, WEEKDAYS * ROWS_OF_CALENDAR, "");
+        $days = array_pad($days, WEEKDAYS * ROWS_OF_CALENDAR, '');
 
         return view('components.calendar', [
-            'carbon'    => $carbon,
-            'calendar'  => $calendar,
+            'carbon'        => $carbon,
+            'days'          => $days,
+            'reservations'  => $this->reservations,
             ]);
     }
 }

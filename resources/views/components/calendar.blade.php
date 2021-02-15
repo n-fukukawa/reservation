@@ -15,8 +15,14 @@
         <div class="cols-span-1 border">金</div>
         <div class="cols-span-1 border">土</div>
 
-       @for($i = 0; $i < count($calendar); $i++)
-            <calendar-cell :year="{{ $carbon->year }}" :month="{{ $carbon->month }}" :day='@json($calendar[$i])' :key="{{ $i }}">
+       @for($i = 0; $i < count($days); $i++)
+            <calendar-cell :year="{{ $carbon->year }}" 
+                           :month="{{ $carbon->month }}" 
+                           :day='@json($days[$i])' 
+                           :reservation='@json($reservations[$days[$i]])'
+                           :key="{{ $i }}"
+                           :number="{{ $i }}"
+                           />
             </calendar-cell>
         @endfor
         
